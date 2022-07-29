@@ -10,18 +10,20 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            allBeast: Data,
+            filter: Data,
         }
     }
 
 
+
     filterTheBeast = (e) => {
         const hornedNum = parseInt(e.target.value);
-        let filterd = Data;
+    
         if (hornedNum) {
-            filterd = Data.filter(item => item.horns === hornedNum);
+            let filterTemp = Data.filter(item => item.horns === hornedNum);
+            this.setState({ filter: filterTemp })
         }
-        this.setState({ allBeast: filterd })
+            
 
     }
 
@@ -40,11 +42,13 @@ class Main extends React.Component {
                     </Form.Select>
                 </Form.Group>
 
+            
+
             <Row xs={2} md={3} className="g-4">
-                {Data.map((item) => {
+                {this.state.filter.map((item , index) => {
                     return (
-                        <Col>
-                            <HornedBeast imgUrl={item.image_url} title={item.title} description={item.description} />
+                        <Col key={index}>
+                            <HornedBeast imgUrl={item.image_url} title={item.title} description={item.description}  key ={index}/>
                         </Col>
                     )
                 }
